@@ -1,14 +1,193 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="assets/style.css">
+    <meta charset="UTF-8">
+    <title>My Vue.js Practice</title>
 </head>
-<body>
 
-  <script src="assets/script.js"></script>
+<body>
+    <div id="mycounter">
+        <div v-text="count"></div>
+        <button v-on:click= "countUp">Up</button>
+    </div>
+    
+    <div id="mystop">
+        <button v-on:click= "hsStop">stop</button>
+    </div>
+    
+	<div id="stage"></div>
+    <script src="./assets/vue.js"></script>
+    <script src='./assets/three.min.js'></script>
+    <script src='./assets/OrbitControls.js'></script>
+    <script>
+        // object(ViewModel) - data/methods(Model) <--> interface(View)
+        // Model View ViewModel - MVVM
+        // counter
+
+        var vm = new Vue({
+            el: '#mycounter',
+            data: {
+                count: 0
+            },
+            methods: {
+                countUp: function() {
+                    this.count++; 
+                    changeRotateSpeed (); 
+                }
+            }
+        });
+        
+        var vm_stop = new Vue({
+            el: '#mystop',
+            methods: {
+                hsStop: function() {
+                    Speed_0(); 
+                }
+            }
+        });
+        var scene = new THREE.Scene();
+  	  	var controls;
+  	  	var renderer;
+	  	var camera;
+      
+        function renderHandSpinner () {
+          'use strict';
+        
+    	  let box;
+	  	  let light;
+	  	  let ambient;
+          let gridHelper;
+  	  	  let axisHelper;
+		  let lightHelper;
+  	      let width = 1200;
+	  	  let height = 1200;
+  	  	  let modelPath ;
+
+	// scene ステージ
+        
+
+	//mesh 物体
+	// -geometry
+	// -material 材質
+
+	  	box = new THREE.Mesh(
+        new THREE.BoxGeometry(50, 50, 50),
+        new THREE.MeshLambertMaterial({ color: 0xff0000 })
+        );
+        box.position.set(0, 0, 0);
+        //scene.add(box);
+
+        //light
+        light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(0, 200, 80);
+        scene.add(light);
+
+    	ambient = new THREE.AmbientLight(0x404040);
+        scene.add(ambient);
+
+  	  	//camera
+        camera = new THREE.PerspectiveCamera(45, width /　height, 1 , 1000);
+	    camera.position.set(200, 300, 150);
+	    camera.lookAt(scene.position);
+
+        // helper
+	   gridHelper = new THREE.GridHelper(200, 50);
+	   //scene.add(gridHelper);
+       axisHelper = new THREE.AxisHelper(1000);
+       //scene.add(axisHelper);
+	   lightHelper = new THREE.DirectionalLightHelper(light , 20)
+  	   //scene.add(lightHelper);
+ 
+       //controls
+	   controls = new THREE.OrbitControls(camera);
+       controls.autoRotate = true;
+	   controls.autoRotateSpeed = 0;
+       console.log(vm.count);
+       console.log("hoge");
+
+  	  	// renderer
+	  	  renderer = new THREE.WebGLRenderer({ antialias : true });
+        renderer.setSize(width, height);
+        renderer.setClearColor(0xefefef);
+	  	  renderer.setPixelRatio(window.devicePixelRatio);
+	  	  document.getElementById('stage').appendChild(renderer.domElement);
+
+  	  	//modelPath = 'src/bear.json';
+  	  	//modelPath = 'src/handspiner_3d.json';
+	  	  //modelPath = '../src/data/handspiner_3d_geo.json';
+  	    modelPath = '../src/data/handspiner_3d_geo.json';
+  	  	//modelPath = '/Users/yoshimurahiroyuki/workspace/threejs/src/handspiner.json';
+/*
+	let loader = new THREE.JSONLoader();
+    loader.load( modelPath, loadCallBack);
+*/
+
+	  	let loader = new THREE.JSONLoader();　　
+        loader.load(modelPath, function(geo, mat) {　　　
+	        //一旦コメントアウト
+	        // let faceMat = new THREE.MeshFaceMaterial(mat);　　　
+		  let phongMat = new THREE.MeshPhongMaterial(mat);
+
+          let model = new THREE.Mesh(geo, phongMat);
+          model.position.set(0, 20, 0);　　　
+          model.scale.set(3, 3, 3);　　　
+          scene.add(model);　　　
+	      //requestAnimationFrame(rendering, renderer.domElement);　
+        //renderer.render(scene, camera);
+        });　
+	
+    
+	  render();
+    }
+
+    function render() {
+        requestAnimationFrame(render);
+        controls.update();
+        renderer.render(scene, camera);
+    }  
+
+    function changeRotateSpeed () {
+	  controls.autoRotateSpeed = vm.count*10;
+	  console.log(vm.count);
+	  render();
+	}
+            
+    function Speed_0 () {
+	  controls.autoRotateSpeed = 0;
+	  vm.count = 0;
+	  render();
+	}
+    renderHandSpinner();
+
+
+    </script>
 </body>
+
+
+ <!--
+ <body>
+  <div id="mycounter">
+        <div v-text="count"></div>
+        <button v-on="click:countUp">Up</button>
+
+    </div> 
+
+  <script src="./assets/vue.js"></script>
+  <script>
+
+        var vm = new Vue({
+            el: '#mycounter',
+            data: {
+                count: 0
+            },
+            methods: {
+                countUp: function() {
+                    this.count++;
+                }
+            }
+        });  
+  </script>
+
+
+</body>   -->
 </html>
