@@ -43,6 +43,7 @@
             }
         });
         var scene = new THREE.Scene();
+    	var box;
   	  	var controls;
   	  	var renderer;
 	  	var camera;
@@ -51,7 +52,6 @@
 	  
         function renderHandSpinner () {
           'use strict';
-    	  let box;
 	  	  let light;
 	  	  let ambient;
           let gridHelper;
@@ -60,6 +60,13 @@
   	      let width = 1200;
 	  	  let height = 1200;
   	  	  let modelPath ;
+
+          box = new THREE.Mesh(
+			new THREE.BoxGeometry(50, 50, 50),
+	        new THREE.MeshLambertMaterial({ color: 0xff0000 })
+		  );
+          box.position.set(0, 0, 0);
+	      scene.add(box);
 
           //light
           light = new THREE.DirectionalLight(0xffffff, 1);
@@ -99,47 +106,51 @@
 	  	  //modelPath = '../src/data/handspiner_3d_geo.json';
   	      modelPath = './src/data/handspiner_3d_geo.json';
   	  	  //modelPath = '/Users/yoshimurahiroyuki/workspace/threejs/src/handspiner.json';
-/*
-	let loader = new THREE.JSONLoader();
-    loader.load( modelPath, loadCallBack);
-*/
 
 	  	  let loader = new THREE.JSONLoader();　　
           loader.load(modelPath, function(geo, mat) {　　　
-		  let phongMat = new THREE.MeshPhongMaterial(mat);
-          model = new THREE.Mesh(geo, phongMat);
+		    let phongMat = new THREE.MeshPhongMaterial(mat);
+            model = new THREE.Mesh(geo, phongMat);
 
-          model.position.set(0, 20, 0);　　　
-          model.scale.set(1, 1, 1);　　　
-          scene.add(model);　　　
-	      //requestAnimationFrame(rendering, renderer.domElement);　
-          //renderer.render(scene, camera);
+            model.position.set(0, 20, 0);　　　
+            model.scale.set(1, 1, 1);　　　
+            scene.add(model);　　　
+	        //requestAnimationFrame(rendering, renderer.domElement);　
+            //renderer.render(scene, camera);
+		    console.log(model);
+            model.rotation.x = 1;
           });　
     
-	      render();
-    }
+	    render();
+      }
 
-    function render() {
-        requestAnimationFrame(render);
-		model.rotation.y += rotate_speed;
-        controls.update();
-        renderer.render(scene, camera);
-    }
+      function render() {
+         // ここのコメントアウトを外すと表示される
+		 //requestAnimationFrame(render);
+		 console.log(box);
+		 console.log(model);
+		 console.log(model.rotation);
+		 console.log(model.rotation.y);
+		 //model.rotation.y += rotate_speed;
+         controls.update();
+         renderer.render(scene, camera);
+      }
 
-    function changeRotateSpeed () {
-	    //controls.autoRotateSpeed = vm.count*10;
-		//model.rotation.y = 0.8*vm.count;
+      function changeRotateSpeed () {
+	      //controls.autoRotateSpeed = vm.count*10;
+		  //model.rotation.y = 0.8*vm.count;
 	    rotate_speed = vm.count*0.01;
 	    console.log(vm.count);
 	    render();
 	  }
             
-    function Speed_0 () {
+      function Speed_0 () {
 	    controls.autoRotateSpeed = 0;
 	    rotate_speed = 0;
 	    render();
 	  }
-    renderHandSpinner();
+    
+      renderHandSpinner();
 
 
     </script>
