@@ -66,7 +66,7 @@
 	        new THREE.MeshLambertMaterial({ color: 0xff0000 })
 		  );
           box.position.set(0, 0, 0);
-	      scene.add(box);
+	      //scene.add(box);
 
           //light
           light = new THREE.DirectionalLight(0xffffff, 1);
@@ -119,26 +119,26 @@
             //renderer.render(scene, camera);
 		    console.log(model);
             model.rotation.x = 1;
+	        render(model);
           });　
     
-	    render();
       }
 
-      function render() {
+      function render (model) {
          // ここのコメントアウトを外すと表示される
 		 //requestAnimationFrame(render);
 		 console.log(box);
 		 console.log(model);
 		 console.log(model.rotation);
 		 console.log(model.rotation.y);
-		 //model.rotation.y += rotate_speed;
+		 model.rotation.y += rotate_speed;
          controls.update();
          renderer.render(scene, camera);
       }
 
       function changeRotateSpeed () {
 	      //controls.autoRotateSpeed = vm.count*10;
-		  //model.rotation.y = 0.8*vm.count;
+		  model.rotation.y = 0.8*vm.count;
 	    rotate_speed = vm.count*0.01;
 	    console.log(vm.count);
 	    render();
