@@ -48,7 +48,9 @@
   	  	var renderer;
 	  	var camera;
         var model = {};
+        var model2 = {};
 	    var rotate_speed = 0.01;
+	    var radian = 0;
 	  
         function renderHandSpinner () {
           'use strict';
@@ -115,23 +117,32 @@
             model.position.set(0, 20, 0);　　　
             model.scale.set(1, 1, 1);　　　
             scene.add(model);　　　
+
+            model2 = new THREE.Mesh(geo, phongMat);
+            model2.position.set(30, 0, 0);　　　
+			model2.scale.set(1, 1, 1);　　　
+			scene.add(model2);　
+
 	        //requestAnimationFrame(rendering, renderer.domElement);　
             //renderer.render(scene, camera);
 		    console.log(model);
-            model.rotation.x = 1;
-	        render(model);
+            //model.rotation.x = 1;
+	        render();
           });　
     
       }
 
-      function render (model) {
+      function render () {
          // ここのコメントアウトを外すと表示される
-		 //requestAnimationFrame(render);
-		 console.log(box);
-		 console.log(model);
-		 console.log(model.rotation);
-		 console.log(model.rotation.y);
+		 requestAnimationFrame(render);
 		 model.rotation.y += rotate_speed;
+		 model2.rotation.y += rotate_speed;
+		 radian += 0.01;
+		 console.log(Math.sin(radian));
+         //model.position.y = Math.sin(radian) ;
+         model.position.y = Math.sin(radian)*40 ;
+        // model.position.y = Math.sin(radian)  ;
+		// model.y += rotate_speed;
          controls.update();
          renderer.render(scene, camera);
       }
@@ -145,7 +156,7 @@
 	  }
             
       function Speed_0 () {
-	    controls.autoRotateSpeed = 0;
+	    vm.count = 0;
 	    rotate_speed = 0;
 	    render();
 	  }
