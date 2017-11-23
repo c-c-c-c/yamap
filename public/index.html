@@ -8,11 +8,11 @@
 <body>
     <div id="mycounter">
         <div v-text="count"></div>
-        <button v-on:click= "countUp">Up</button>
+        <button v-on:click= "countUp"><h1>Up</h1></button>
     </div>
     
     <div id="mystop">
-        <button v-on:click= "hsStop">stop</button>
+        <button v-on:click= "hsStop"><h2>stop</h2></button>
     </div>
     
 	<div id="stage"></div>
@@ -50,7 +50,7 @@
         var model = {};
         var model2 = {};
         var model3 = {};
-	    var rotate_speed = 0.01;
+	    var rotate_speed = 0.05;
 	    var radian = 0;
 	  
         function renderHandSpinner () {
@@ -113,24 +113,36 @@
 	  	  let loader = new THREE.JSONLoader();　　
           loader.load(modelPath, function(geo, mat) {　　　
 		    let phongMat = new THREE.MeshPhongMaterial(mat);
+		    let phongMat2 = new THREE.MeshPhongMaterial(mat);
+		    let phongMat3 = new THREE.MeshPhongMaterial(mat);
+//            for (let mt of faceMat.materials) {
+//		      mt.color = new THREE.Color(0xffcc88);
+//			}
+
             model = new THREE.Mesh(geo, phongMat);
 
             model.position.set(0, 20, 0);　　　
             model.scale.set(1, 1, 1);　　　
+			let randColor = Math.random() * 0xffffff ;　　　
+			model.material.color = new THREE.Color(randColor);
             scene.add(model);　　　
 
-            model2 = new THREE.Mesh(geo, phongMat);
+            model2 = new THREE.Mesh(geo, phongMat2);
             model2.position.set(30, 0, 0);　　　
-			model2.scale.set(1, 1, 1);　　　
+			model2.scale.set(1, 1, 1);
+			let randColor2 = Math.random() * 0xffffff ;　　　
+			model2.material.color = new THREE.Color(randColor2);
 			scene.add(model2);　
 
-            model3 = new THREE.Mesh(geo, phongMat);
+            model3 = new THREE.Mesh(geo, phongMat3);
             model3.position.set(-30, 0, 0);　　　
 			model3.scale.set(1, 1, 1);　　　
+			let randColor3 = Math.random() * 0xffffff ;　　　
+			model3.material.color = new THREE.Color(randColor3);
 			scene.add(model3);　
 	        //requestAnimationFrame(rendering, renderer.domElement);　
             //renderer.render(scene, camera);
-		    console.log(model);
+		    //console.log(model);
             //model.rotation.x = 1;
 	        render();
           });　
@@ -143,8 +155,8 @@
 		 model.rotation.y += rotate_speed;
 		 model2.rotation.y += rotate_speed;
 		 model3.rotation.y += rotate_speed;
-		 radian += 0.03;
-		 console.log(radian);
+		 radian += 0.02;
+		 //console.log(radian);
          //model.position.y = Math.sin(radian) ;
          model.position.y = Math.sin(radian)*40 ;
          model2.position.y = Math.sin(radian)*40 + 100 ;
@@ -158,7 +170,7 @@
       function changeRotateSpeed () {
 	    //controls.autoRotateSpeed = vm.count*10;
 		model.rotation.y = 1.8*vm.count;
-	    rotate_speed = vm.count*0.01;
+	    rotate_speed += vm.count*0.01;
 	    console.log(vm.count);
  	 //   requestAnimationFrame(render);
 	  }
