@@ -6,15 +6,15 @@
 </head>
 
 <body>
-    <div id="mycounter">
-        <div v-text="count"></div>
-        <button v-on:click= "countUp"><h1>Up</h1></button>
-    </div>
     
-    <div id="mystop">
-        <button v-on:click= "hsStop"><h2>stop</h2></button>
+    <div id="mystop" style="float:left;">
+        <img src="public/img/Stop.png" v-on:click= "hsStop" width="100px">
     </div>
-    
+    <div id="mycounter" style="float:left;">
+        <img src="public/img/SPIN.png" v-on:click= "countUp" width="100px" style="float:left;">
+        <div style="float:left;">回転スピードLv:</div><span v-text="count" style="float:left;"></span>
+    </div>
+    <div style="clear: both;"></div>
 	<div id="stage"></div>
     <script src="./public/assets/vue.js"></script>
     <script src='./public/assets/three.min.js'></script>
@@ -60,8 +60,8 @@
           let gridHelper;
   	  	  let axisHelper;
 		  let lightHelper;
-  	      let width = 500;
-	  	  let height = 500;
+  	      let width = 1000;
+	  	  let height = 1000;
   	  	  let modelPath ;
 
           box = new THREE.Mesh(
@@ -178,7 +178,6 @@
       function Speed_0 () {
 	    vm.count = 0;
 	    rotate_speed = 0;
-	    render();
 	  }
     
       renderHandSpinner();
