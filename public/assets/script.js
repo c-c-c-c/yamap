@@ -45,8 +45,8 @@ function renderHandSpinner() {
   var gridHelper = void 0;
   var axisHelper = void 0;
   var lightHelp = void 0;
-  var width = 800;
-  var height = 800;
+  var width = 1200;
+  var height = 1200;
   var modelPath = void 0;
 
   //light
