@@ -33,7 +33,8 @@ var model = [];
 var model2 = {};
 var model3 = {};
 var rotate_speed = 0.05;
-var radian = 0;
+var r_radian = 0;
+var c_radian = 0;
 var geometry = void 0;
 var material = void 0;
 
@@ -58,7 +59,7 @@ function renderHandSpinner() {
 
   //camera
   camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-  camera.position.set(200, 400, 500);
+  camera.position.set(0, 400, 300);
   camera.lookAt(scene.position);
 
   // helper 現在は非表示
@@ -141,13 +142,19 @@ function render() {
   console.log("coming");
 
   requestAnimationFrame(render);
-  radian += 0.01;
+  r_radian += 0.01;
 
   for (var i = 0; i < howManySpinners; i++) {
     model[i].rotation.y += rotate_speed;
-    model[i].position.y += (Math.sin(radian) - Math.sin(radian - 0.01)) * 150;
+    model[i].position.y += (Math.sin(r_radian) - Math.sin(r_radian - 0.01)) * 150;
     console.log("hoge");
   }
+
+  c_radian += 0.007;
+  var cameraZ = 150 * Math.sin(c_radian) + 150;
+  // let cameraZ = 0; 
+  camera.position.set(0, 400, cameraZ);
+
   controls.update();
   renderer.render(scene, camera);
 }

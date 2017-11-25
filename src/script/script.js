@@ -31,7 +31,8 @@ let model = [];
 let model2 = {};
 let model3 = {};
 let rotate_speed = 0.05;
-let radian = 0;
+let r_radian = 0;
+let c_radian = 0;
 let geometry;
 let material;
 
@@ -55,7 +56,7 @@ function renderHandSpinner () {
 
 	//camera
   camera = new THREE.PerspectiveCamera(45, width /　height, 1 , 1000);
-  camera.position.set(200, 400, 500);
+  camera.position.set(0, 400, 300);
   camera.lookAt(scene.position);
 
   // helper 現在は非表示
@@ -73,7 +74,7 @@ function renderHandSpinner () {
   controls.autoRotateSpeed = 1.5;
 
   // renderer
-  renderer = new THREE.WebGLRenderer({ antialias : true });
+  renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(width, height);
   renderer.setClearColor(0xefefef);
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -138,13 +139,19 @@ function render () {
 	console.log("coming");
 
   requestAnimationFrame(render);
-  radian += 0.01;
+  r_radian += 0.01;
 
 	for (let i=0; i < howManySpinners; i++ ) {
   	model[i].rotation.y += rotate_speed;
-    model[i].position.y += (Math.sin(radian) - Math.sin(radian-0.01))*150 ;
+    model[i].position.y += (Math.sin(r_radian) - Math.sin(r_radian-0.01))*150 ;
 		console.log("hoge");
 	}
+
+	c_radian += 0.007;
+  let cameraZ = 150 * (Math.sin(c_radian)) +150;
+ // let cameraZ = 0; 
+	camera.position.set(0, 400, cameraZ);
+
   controls.update();
   renderer.render(scene, camera);
 }
