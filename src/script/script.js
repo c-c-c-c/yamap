@@ -150,7 +150,7 @@ function render () {
 	c_radian += 0.007;
   let cameraZ = 150 * (Math.sin(c_radian)) +150;
  // let cameraZ = 0; 
-	camera.position.set(0, 400, cameraZ);
+	camera.position.set(0, 600, cameraZ);
 
   controls.update();
   renderer.render(scene, camera);
