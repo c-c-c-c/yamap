@@ -79,7 +79,7 @@ function renderHandSpinner() {
   // renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(width, height);
-  renderer.setClearColor(0xefefef);
+  renderer.setClearColor(0xffffff);
   renderer.setPixelRatio(window.devicePixelRatio);
   document.getElementById('stage').appendChild(renderer.domElement);
 
